@@ -1,27 +1,122 @@
-import { Button } from "../ui/button";
+"use client";
+
+import { cn } from "@/lib/util";
+import { CalendarIcon, ChevronLeft, ChevronUpDown } from "../icons";
+import { buttonVariants } from "../ui/button";
+import {
+  Button,
+  CalendarCell,
+  CalendarGrid,
+  CalendarGridBody,
+  CalendarGridHeader,
+  CalendarHeaderCell,
+  DateInput,
+  DateRangePicker,
+  DateSegment,
+  Dialog,
+  Group,
+  Heading,
+  Label,
+  Popover,
+  RangeCalendar,
+} from "react-aria-components";
+import { useState } from "react";
+import { parseDate } from "@internationalized/date";
 
 const OrderDateRange = () => {
+  const [date, setDate] = useState({
+    start: parseDate("2020-02-03"),
+    end: parseDate("2020-02-08"),
+  });
+
   return (
-    <Button className="gap-3">
-      <span className="inline-block -mt-0.5">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-4 h-4"
-          viewBox="0 0 16 16"
-          fill="currentColor"
+    <DateRangePicker value={date} onChange={setDate}>
+      <Label className="mb-4 font-semibold text-2xl flex flex-col">
+        Date Range
+      </Label>
+      <Group
+        className={cn(
+          "flex whitespace-nowrap w-fit min-w-[16rem] items-center max-w-full",
+          "px-4 ring-1 ring-neutral-200 py-2 gap-0"
+        )}
+      >
+        <DateInput slot="start" className={"inline-flex"}>
+          {(segment) => (
+            <DateSegment
+              className={
+                "outline-none border-none focus:bg-neutral-200 focus:text-neutral-900"
+              }
+              segment={segment}
+            />
+          )}
+        </DateInput>
+        <span aria-hidden="true" className="inline-block mx-1">
+          -
+        </span>
+        <DateInput slot="end" className={"inline-flex"}>
+          {(segment) => (
+            <DateSegment
+              segment={segment}
+              className={
+                "outline-none border-none focus:bg-neutral-200 focus:text-neutral-900"
+              }
+            />
+          )}
+        </DateInput>
+        <Button
+          className={
+            "inline-flex items-center justify-center ml-auto -mr-1.5 bg-neutral-300 text-neutral-900 border-none outline-none focus-visible:ring-2 focus-visible:ring-neutral-200 focus-visible:ring-offset-2 hover:bg-neutral-100 transition-colors duration-100 focus-visible:ring-offset-neutral-900 w-8 h-8"
+          }
         >
-          <path
-            d="m3.25,10c0-.2.08-.39.22-.53.14-.14.33-.22.53-.22h.01c.2,0,.39.08.53.22.14.14.22.33.22.53h0c0,.21-.08.4-.22.54-.14.14-.33.22-.53.22h-.01c-.2,0-.39-.08-.53-.22-.14-.14-.22-.33-.22-.53h0Zm.75,1.25c-.2,0-.39.08-.53.22-.14.14-.22.33-.22.53h0c0,.42.34.76.75.76h.01c.2,0,.39-.08.53-.22.14-.14.22-.33.22-.53h0c0-.21-.08-.4-.22-.54-.14-.14-.33-.22-.53-.22h-.01Zm1.25-1.25c0-.2.08-.39.22-.53.14-.14.33-.22.53-.22h.01c.2,0,.39.08.53.22.14.14.22.33.22.53h0c0,.21-.08.4-.22.54-.14.14-.33.22-.53.22h-.01c-.2,0-.39-.08-.53-.22-.14-.14-.22-.33-.22-.53h0Zm.75,1.25c-.2,0-.39.08-.53.22-.14.14-.22.33-.22.53h0c0,.42.34.76.75.76h.01c.2,0,.39-.08.53-.22.14-.14.22-.33.22-.53h0c0-.21-.08-.4-.22-.54-.14-.14-.33-.22-.53-.22h-.01Zm1.25-3.25c0-.2.08-.39.22-.53.14-.14.33-.22.53-.22h.01c.2,0,.39.08.53.22.14.14.22.33.22.53h0c0,.21-.08.4-.22.54-.14.14-.33.22-.53.22h-.01c-.2,0-.39-.08-.53-.22-.14-.14-.22-.33-.22-.53h0Zm.75,1.25c-.2,0-.39.08-.53.22-.14.14-.22.33-.22.53h0c0,.42.34.76.75.76h.01c.2,0,.39-.08.53-.22.14-.14.22-.33.22-.53h0c0-.21-.08-.4-.22-.54-.14-.14-.33-.22-.53-.22h-.01Zm-.75,2.75c0-.2.08-.39.22-.53.14-.14.33-.22.53-.22h.01c.2,0,.39.08.53.22.14.14.22.33.22.53h0c0,.21-.08.4-.22.54-.14.14-.33.22-.53.22h-.01c-.2,0-.39-.08-.53-.22-.14-.14-.22-.33-.22-.53h0Zm2.75-4.75c-.2,0-.39.08-.53.22-.14.14-.22.33-.22.53h0c0,.42.34.76.75.76h.01c.2,0,.39-.08.53-.22.14-.14.22-.33.22-.53h0c0-.21-.08-.4-.22-.54-.14-.14-.33-.22-.53-.22h-.01Zm-.75,2.75c0-.2.08-.39.22-.53.14-.14.33-.22.53-.22h.01c.2,0,.39.08.53.22.14.14.22.33.22.53h0c0,.21-.08.4-.22.54-.14.14-.33.22-.53.22h-.01c-.2,0-.39-.08-.53-.22-.14-.14-.22-.33-.22-.53h0Zm.75,1.25c-.2,0-.39.08-.53.22-.14.14-.22.33-.22.53h0c0,.42.34.76.75.76h.01c.2,0,.39-.08.53-.22.14-.14.22-.33.22-.53h0c0-.21-.08-.4-.22-.54-.14-.14-.33-.22-.53-.22h-.01Zm1.25-3.25c0-.2.08-.39.22-.53.14-.14.33-.22.53-.22h.01c.2,0,.39.08.53.22.14.14.22.33.22.53h0c0,.21-.08.4-.22.54-.14.14-.33.22-.53.22h-.01c-.2,0-.39-.08-.53-.22-.14-.14-.22-.33-.22-.53h0Zm.75,1.25c-.2,0-.39.08-.53.22-.14.14-.22.33-.22.53h0c0,.42.34.76.75.76h.01c.2,0,.39-.08.53-.22.14-.14.22-.33.22-.53h0c0-.21-.08-.4-.22-.54-.14-.14-.33-.22-.53-.22h-.01Z"
-            strokeWidth="0"
-          />
-          <path
-            d="m3.75,0c.2,0,.39.08.53.22.14.14.22.33.22.53v1.25h7V.75c0-.2.08-.39.22-.53.14-.14.33-.22.53-.22s.39.08.53.22c.14.14.22.33.22.53v1.25h.25c.73,0,1.43.29,1.94.81.52.52.81,1.22.81,1.94v11.25H0V4.75c0-.73.29-1.43.81-1.94.52-.52,1.22-.81,1.94-.81h.25V.75c0-.2.08-.39.22-.53.14-.14.33-.22.53-.22Zm10.75,5.5H1.5v9h13V5.5Z"
-            strokeWidth="0"
-          />
-        </svg>
-      </span>
-      <span>Choose Range</span>
-    </Button>
+          <ChevronUpDown />
+        </Button>
+      </Group>
+      <Popover offset={8} placement="bottom right" className={"shadow-2xl"}>
+        <Dialog>
+          <RangeCalendar className={"bg-neutral-800 p-4 min-w-[20rem]"}>
+            <header className="flex items-center justify-between gap-4 mb-6">
+              <Button
+                slot="previous"
+                className={
+                  "w-8 h-8 inline-flex items-center justify-center bg-neutral-400 text-neutral-900 border-none focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900 focus-visible:ring-2 focus-visible:ring-neutral-200 outline-none hover:bg-neutral-300 transition-colors duration-100"
+                }
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </Button>
+              <Heading />
+              <Button
+                slot="next"
+                className={
+                  "w-8 h-8 inline-flex items-center justify-center bg-neutral-400 text-neutral-900 border-none focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900 focus-visible:ring-2 focus-visible:ring-neutral-200 outline-none hover:bg-neutral-300 transition-colors duration-100"
+                }
+              >
+                <ChevronLeft className="w-5 h-5 rotate-180" />
+              </Button>
+            </header>
+            <CalendarGrid className="w-full">
+              <CalendarGridHeader className="bg-white/5">
+                {(day) => (
+                  <CalendarHeaderCell className="py-2">
+                    {day}
+                  </CalendarHeaderCell>
+                )}
+              </CalendarGridHeader>
+              <div className="w-full h-6" aria-hidden="true"></div>
+              <CalendarGridBody className="">
+                {(date) => (
+                  <CalendarCell
+                    date={date}
+                    className={
+                      "flex items-start justify-start pl-2.5 selected:bg-neutral-200 outside-month:cursor-default selected:text-neutral-800 hover:bg-neutral-700 border-none outline-none py-2 focus-visible:ring-1 focus-visible:ring-neutral-200 focus-visible:selected:ring-offset-2 focus-visible:selected:ring-offset-neutral-700 transition-colors duration-100"
+                    }
+                  />
+                )}
+              </CalendarGridBody>
+            </CalendarGrid>
+          </RangeCalendar>
+        </Dialog>
+      </Popover>
+    </DateRangePicker>
   );
 };
 export default OrderDateRange;

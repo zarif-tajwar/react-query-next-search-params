@@ -1,7 +1,7 @@
 "use client";
 
 import { capitalize, cn } from "@/lib/util";
-import { Button, buttonVariants } from "../ui/button";
+import { buttonVariants } from "../ui/button";
 import { OrderStatus, orderStatuses } from "@/lib/constants";
 import { CheckboxGroup, Checkbox, Label } from "react-aria-components";
 import { useState } from "react";
@@ -16,6 +16,7 @@ const OrderStatusCheckbox = () => {
     <CheckboxGroup
       value={selected}
       onChange={(value) => setSelected(value as OrderStatus[])}
+      className="flex flex-col"
     >
       <Label className="mb-4 font-semibold text-2xl inline-block">
         Order Status
@@ -27,21 +28,22 @@ const OrderStatusCheckbox = () => {
               key={status}
               id={status}
               value={status}
-              className="cursor-pointer"
+              className={({ isSelected }) =>
+                cn(
+                  buttonVariants({
+                    variant: isSelected ? "filled" : "unchecked",
+                  }),
+                  "cursor-pointer group min-h-[3rem]",
+                  isSelected && "hover:bg-neutral-300"
+                )
+              }
             >
               {({ isSelected }) => (
-                <span
-                  className={cn(
-                    buttonVariants({
-                      variant: isSelected ? "filled" : "unchecked",
-                    }),
-                    isSelected && "hover:bg-neutral-300",
-                    "group"
-                  )}
-                >
+                <>
                   <span
+                    aria-hidden="true"
                     className={cn(
-                      "inline-block p-1 ring-1 -ml-2",
+                      "inline-block p-1 ring-1 -ml-2 transition-colors duration-100",
                       isSelected && "ring-neutral-900 ring-1 bg-neutral-200",
                       !isSelected &&
                         "bg-transparent ring-neutral-300 text-neutral-300"
@@ -60,9 +62,8 @@ const OrderStatusCheckbox = () => {
                       />
                     </svg>
                   </span>
-
                   <span>{capitalize(status)}</span>
-                </span>
+                </>
               )}
             </Checkbox>
           );
