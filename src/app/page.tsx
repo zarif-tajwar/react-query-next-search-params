@@ -1,122 +1,28 @@
-import { Button } from "@/components/button";
-import { getData, orderStatuses } from "@/lib/data";
-import { capitalize, cn } from "@/lib/util";
+import OrderListing from "@/components/orders/listing";
+import OrderDateRange from "@/components/orders/order-date-range";
+import OrderSortSelect from "@/components/orders/order-sort-select";
+import OrderStatusCheckbox from "@/components/orders/order-status-checkbox";
+import { Button } from "@/components/ui/button";
+import { getData } from "@/lib/data";
 
 export default async function Home() {
   const data = (await getData())?.slice(0, 10);
   return (
     <section>
       <div className="w-full flex items-start justify-start gap-x-16 gap-y-8 flex-wrap mb-36">
-        <div>
-          <h3 className="mb-4 font-semibold text-2xl">Order Status</h3>
-          <div className="flex items-center justify-start gap-2.5 flex-wrap">
-            {orderStatuses.map((status) => {
-              const isChecked = status === "delivered";
-
-              return (
-                <Button
-                  key={status}
-                  id={status}
-                  variant={isChecked ? "filled" : "unchecked"}
-                >
-                  <span
-                    className={cn(
-                      "inline-block p-1 ring-1 -ml-2",
-                      isChecked && "ring-neutral-900 ring-1 bg-neutral-200",
-                      !isChecked &&
-                        "bg-transparent ring-neutral-300 text-neutral-300"
-                    )}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      className="w-5 h-5"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </span>
-
-                  <span>{capitalize(status)}</span>
-                </Button>
-              );
-            })}
-          </div>
-        </div>
+        <OrderStatusCheckbox />
         <div>
           <h3 className="mb-4 font-semibold text-2xl">Sort by</h3>
-          <Button>
-            <span>Delivery Time</span>
-            <span className="inline-block -mr-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                className="w-5 h-5"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </span>
-          </Button>
+          <OrderSortSelect />
         </div>
         <div>
           <h3 className="mb-4 font-semibold text-2xl">Date Range</h3>
-          <Button className="gap-3">
-            <span className="inline-block -mt-0.5">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-4 h-4"
-                viewBox="0 0 16 16"
-                fill="currentColor"
-              >
-                <path
-                  d="m3.25,10c0-.2.08-.39.22-.53.14-.14.33-.22.53-.22h.01c.2,0,.39.08.53.22.14.14.22.33.22.53h0c0,.21-.08.4-.22.54-.14.14-.33.22-.53.22h-.01c-.2,0-.39-.08-.53-.22-.14-.14-.22-.33-.22-.53h0Zm.75,1.25c-.2,0-.39.08-.53.22-.14.14-.22.33-.22.53h0c0,.42.34.76.75.76h.01c.2,0,.39-.08.53-.22.14-.14.22-.33.22-.53h0c0-.21-.08-.4-.22-.54-.14-.14-.33-.22-.53-.22h-.01Zm1.25-1.25c0-.2.08-.39.22-.53.14-.14.33-.22.53-.22h.01c.2,0,.39.08.53.22.14.14.22.33.22.53h0c0,.21-.08.4-.22.54-.14.14-.33.22-.53.22h-.01c-.2,0-.39-.08-.53-.22-.14-.14-.22-.33-.22-.53h0Zm.75,1.25c-.2,0-.39.08-.53.22-.14.14-.22.33-.22.53h0c0,.42.34.76.75.76h.01c.2,0,.39-.08.53-.22.14-.14.22-.33.22-.53h0c0-.21-.08-.4-.22-.54-.14-.14-.33-.22-.53-.22h-.01Zm1.25-3.25c0-.2.08-.39.22-.53.14-.14.33-.22.53-.22h.01c.2,0,.39.08.53.22.14.14.22.33.22.53h0c0,.21-.08.4-.22.54-.14.14-.33.22-.53.22h-.01c-.2,0-.39-.08-.53-.22-.14-.14-.22-.33-.22-.53h0Zm.75,1.25c-.2,0-.39.08-.53.22-.14.14-.22.33-.22.53h0c0,.42.34.76.75.76h.01c.2,0,.39-.08.53-.22.14-.14.22-.33.22-.53h0c0-.21-.08-.4-.22-.54-.14-.14-.33-.22-.53-.22h-.01Zm-.75,2.75c0-.2.08-.39.22-.53.14-.14.33-.22.53-.22h.01c.2,0,.39.08.53.22.14.14.22.33.22.53h0c0,.21-.08.4-.22.54-.14.14-.33.22-.53.22h-.01c-.2,0-.39-.08-.53-.22-.14-.14-.22-.33-.22-.53h0Zm2.75-4.75c-.2,0-.39.08-.53.22-.14.14-.22.33-.22.53h0c0,.42.34.76.75.76h.01c.2,0,.39-.08.53-.22.14-.14.22-.33.22-.53h0c0-.21-.08-.4-.22-.54-.14-.14-.33-.22-.53-.22h-.01Zm-.75,2.75c0-.2.08-.39.22-.53.14-.14.33-.22.53-.22h.01c.2,0,.39.08.53.22.14.14.22.33.22.53h0c0,.21-.08.4-.22.54-.14.14-.33.22-.53.22h-.01c-.2,0-.39-.08-.53-.22-.14-.14-.22-.33-.22-.53h0Zm.75,1.25c-.2,0-.39.08-.53.22-.14.14-.22.33-.22.53h0c0,.42.34.76.75.76h.01c.2,0,.39-.08.53-.22.14-.14.22-.33.22-.53h0c0-.21-.08-.4-.22-.54-.14-.14-.33-.22-.53-.22h-.01Zm1.25-3.25c0-.2.08-.39.22-.53.14-.14.33-.22.53-.22h.01c.2,0,.39.08.53.22.14.14.22.33.22.53h0c0,.21-.08.4-.22.54-.14.14-.33.22-.53.22h-.01c-.2,0-.39-.08-.53-.22-.14-.14-.22-.33-.22-.53h0Zm.75,1.25c-.2,0-.39.08-.53.22-.14.14-.22.33-.22.53h0c0,.42.34.76.75.76h.01c.2,0,.39-.08.53-.22.14-.14.22-.33.22-.53h0c0-.21-.08-.4-.22-.54-.14-.14-.33-.22-.53-.22h-.01Z"
-                  strokeWidth="0"
-                />
-                <path
-                  d="m3.75,0c.2,0,.39.08.53.22.14.14.22.33.22.53v1.25h7V.75c0-.2.08-.39.22-.53.14-.14.33-.22.53-.22s.39.08.53.22c.14.14.22.33.22.53v1.25h.25c.73,0,1.43.29,1.94.81.52.52.81,1.22.81,1.94v11.25H0V4.75c0-.73.29-1.43.81-1.94.52-.52,1.22-.81,1.94-.81h.25V.75c0-.2.08-.39.22-.53.14-.14.33-.22.53-.22Zm10.75,5.5H1.5v9h13V5.5Z"
-                  strokeWidth="0"
-                />
-              </svg>
-            </span>
-            <span>Choose Range</span>
-          </Button>
+          <OrderDateRange />
         </div>
       </div>
       <div>
         <h2 className="font-semibold text-4xl mb-10">Filtered Results</h2>
-        <div className="grid grid-cols-2 gap-8">
-          {data?.map((order) => (
-            <div key={order.order_id} className="border-b-4 border-neutral-600">
-              <span className="w-full block bg-neutral-300 px-6 py-3 text-xl font-bold -mb-0.5 text-neutral-900">
-                Order ID : {order.order_id}
-              </span>
-              <div
-                key={order.order_id}
-                className="bg-neutral-800 grid grid-cols-2 p-6 gap-1.5"
-              >
-                <span className="font-medium">Order Status</span>
-                <span>{capitalize(order.order_status)}</span>
-                <span className="font-medium">Remaining time</span>
-                <span>{order.delivery_time} minutes</span>
-                <span className="font-medium">Order Date</span>
-                <span>
-                  {new Intl.DateTimeFormat("en-US").format(order.order_date)}
-                </span>
-                <span className="font-medium">Customer Name</span>
-                <span>{order.customer_name}</span>
-              </div>
-            </div>
-          ))}
-        </div>
+        {data && <OrderListing orders={data} />}
       </div>
     </section>
   );

@@ -1,11 +1,8 @@
 import * as fs from "fs";
 import z from "zod";
-
-export const orderStatuses = ["pending", "in progress", "delivered"] as const;
+import { orderStatuses } from "./constants";
 
 const zOrderStatus = z.enum(orderStatuses);
-
-type OrderStatus = (typeof orderStatuses)[number];
 
 const zData = z.object({
   order_id: z.number(),
@@ -19,6 +16,8 @@ const zData = z.object({
 });
 
 const zDataArr = z.array(zData);
+
+export type Orders = z.infer<typeof zDataArr>;
 
 export const getData = async () => {
   const jsonString = fs.readFileSync("src/lib/data.json", {
