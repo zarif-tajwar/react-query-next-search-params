@@ -15,6 +15,7 @@ const zData = z.object({
   order_total: z.number(),
   delivery_time: z.number(),
   order_status: zOrderStatus,
+  customer_name: z.string(),
 });
 
 const zDataArr = z.array(zData);
