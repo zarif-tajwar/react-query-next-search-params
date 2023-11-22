@@ -1,7 +1,8 @@
 "use client";
 
-import { defaultTotalBillRange } from "@/lib/constants";
+import { defaultTotalBillRange, searchParamSeperators } from "@/lib/constants";
 import { cn, priceFormat } from "@/lib/util";
+import { useQueryState } from "next-usequerystate";
 import { useState } from "react";
 import {
   Label,
@@ -12,11 +13,27 @@ import {
 } from "react-aria-components";
 
 const OrderBillRangeSlider = () => {
-  const [range, setRange] = useState([330, 660]);
+  const [rangeParamState, setRangeParamState] = useQueryState("bill-range");
+  const parsedRange = rangeParamState
+    ?.split(searchParamSeperators.range)
+    .map((str) => Number(str))
+    .filter((num) => !Number.isNaN(num));
+
+  const range = parsedRange ? parsedRange : defaultTotalBillRange;
+  const handleChange = (range: number[]) => {
+    const isDefault =
+      range[0] === defaultTotalBillRange[0] &&
+      range[1] === defaultTotalBillRange[1];
+
+    setRangeParamState(
+      isDefault ? null : range.map(String).join(searchParamSeperators.range)
+    );
+  };
+
   return (
     <Slider
-      value={range}
-      onChange={setRange}
+      defaultValue={range}
+      onChangeEnd={handleChange}
       minValue={defaultTotalBillRange[0]}
       maxValue={defaultTotalBillRange[1]}
     >
@@ -37,8 +54,6 @@ const OrderBillRangeSlider = () => {
         {({ state }) => {
           const minProgress = state.getThumbPercent(0) * 100;
           const activeTrackWidth = state.getThumbPercent(1) * 100 - minProgress;
-          console.log(state.getThumbPercent(0), "MIN");
-          console.log(state.getThumbPercent(1), "MAX");
           return (
             <div className="bg-neutral-600 h-0.5 relative top-1/2 -translate-y-1/2">
               {state.values.map((_, i) => (

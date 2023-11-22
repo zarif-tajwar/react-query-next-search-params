@@ -21,22 +21,44 @@ import {
   RangeCalendar,
 } from "react-aria-components";
 import { useState } from "react";
-import { parseDate } from "@internationalized/date";
+import { parseDate, type CalendarDate } from "@internationalized/date";
+import { parseAsString, useQueryStates } from "next-usequerystate";
 
 const OrderDateRange = () => {
   const [date, setDate] = useState({
     start: parseDate("2020-02-03"),
     end: parseDate("2020-02-08"),
   });
+  const [dateRangeParamState, setDateRangeParamState] = useQueryStates({
+    "start-date": parseAsString,
+    "end-date": parseAsString,
+  });
+  const dateRange =
+    dateRangeParamState["start-date"] && dateRangeParamState["end-date"]
+      ? {
+          start: parseDate(dateRangeParamState["start-date"]),
+          end: parseDate(dateRangeParamState["end-date"]),
+        }
+      : undefined;
 
   return (
-    <DateRangePicker value={date} onChange={setDate}>
+    <DateRangePicker
+      defaultValue={dateRange}
+      onChange={(value) => {
+        const newParamState = {
+          "start-date": value.start ? value.start.toString() : null,
+          "end-date": value.end ? value.end.toString() : null,
+        };
+
+        setDateRangeParamState(newParamState);
+      }}
+    >
       <Label className="mb-4 font-semibold text-2xl flex flex-col">
         Date Range
       </Label>
       <Group
         className={cn(
-          "flex whitespace-nowrap w-fit min-w-[16rem] items-center max-w-full",
+          "flex whitespace-nowrap w-fit min-w-[17.5rem] items-center max-w-full",
           "px-4 ring-1 ring-neutral-200 py-2 gap-0"
         )}
       >
@@ -53,7 +75,7 @@ const OrderDateRange = () => {
         <span aria-hidden="true" className="inline-block mx-1">
           -
         </span>
-        <DateInput slot="end" className={"inline-flex"}>
+        <DateInput slot="end" className={"inline-flex mr-3"}>
           {(segment) => (
             <DateSegment
               segment={segment}

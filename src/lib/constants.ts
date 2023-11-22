@@ -1,5 +1,5 @@
-export const orderStatuses = ["pending", "in progress", "delivered"] as const;
-export type OrderStatus = (typeof orderStatuses)[number];
+export const orderStatuses = ["pending", "in progress", "delivered"];
+export type OrderStatus = "pending" | "in progress" | "delivered";
 
 export const sortSelectOptions = [
   { label: "Total Price (asc)", value: "price-asc" },
@@ -15,3 +15,9 @@ export const sortSelectValues = sortSelectOptions.map((o) => o.value);
 export type SortSelectValue = (typeof sortSelectValues)[number];
 
 export const defaultTotalBillRange = [5, 1000];
+
+export const searchParamSeperators = {
+  range: "-",
+  multipleOption: ",",
+  date: "-",
+};

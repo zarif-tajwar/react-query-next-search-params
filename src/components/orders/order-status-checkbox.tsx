@@ -2,20 +2,40 @@
 
 import { capitalize, cn } from "@/lib/util";
 import { buttonVariants } from "../ui/button";
-import { OrderStatus, orderStatuses } from "@/lib/constants";
+import {
+  OrderStatus,
+  orderStatuses,
+  searchParamSeperators,
+} from "@/lib/constants";
 import { CheckboxGroup, Checkbox, Label } from "react-aria-components";
 import { useState } from "react";
+import { useQueryState } from "next-usequerystate";
 
 const OrderStatusCheckbox = () => {
-  const [selected, setSelected] = useState<OrderStatus[]>([
-    "delivered",
-    "in progress",
-    "pending",
-  ]);
+  const [checkedParamState, setCheckedParamState] =
+    useQueryState("order-status");
+
+  const parsedChecked = checkedParamState
+    ?.split(searchParamSeperators.multipleOption)
+    .filter((value) => orderStatuses.some((x) => x === value));
+
+  const checkedOptions =
+    !parsedChecked || parsedChecked.length === orderStatuses.length
+      ? orderStatuses
+      : parsedChecked;
+
+  const handleCheck = (value: string[]) => {
+    setCheckedParamState(
+      value.length === orderStatuses.length || value.length === 0
+        ? null
+        : value.join(searchParamSeperators.multipleOption)
+    );
+  };
+
   return (
     <CheckboxGroup
-      value={selected}
-      onChange={(value) => setSelected(value as OrderStatus[])}
+      value={checkedOptions}
+      onChange={handleCheck}
       className="flex flex-col"
     >
       <Label className="mb-4 font-semibold text-2xl inline-block">

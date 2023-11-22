@@ -1,6 +1,6 @@
 "use client";
 
-import { sortSelectOptions } from "@/lib/constants";
+import { sortSelectOptions, sortSelectValues } from "@/lib/constants";
 import { buttonVariants } from "../ui/button";
 import {
   Button,
@@ -14,13 +14,33 @@ import {
 import type { Key } from "react-aria-components";
 import { cn } from "@/lib/util";
 import { useState } from "react";
+import { useQueryState } from "next-usequerystate";
 
 const OrderSortSelect = () => {
   const [selected, setSelected] = useState<Key>(sortSelectOptions[0].value);
+  const defaultSortValue = sortSelectOptions[0].value;
+  const [sortSelectParamState, setSortSelectParamState] =
+    useQueryState("sort_by");
+
+  const isParamValid =
+    sortSelectOptions.findIndex((v) => v.value === sortSelectParamState) !== -1;
+
+  const selected2: Key =
+    sortSelectParamState && isParamValid
+      ? sortSelectParamState
+      : defaultSortValue;
+
+  const handleChange = (changedValue: Key) => {
+    const newParamValue =
+      changedValue === defaultSortValue ? null : (changedValue as string);
+    setSortSelectParamState(newParamValue);
+  };
+
   return (
     <Select
-      selectedKey={selected}
-      onSelectionChange={setSelected}
+      // selectedKey={selected}
+      defaultSelectedKey={selected2}
+      onSelectionChange={handleChange}
       className="flex flex-col"
     >
       {({ isOpen }) => (
