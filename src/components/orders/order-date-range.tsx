@@ -30,14 +30,14 @@ const OrderDateRange = () => {
     end: parseDate("2020-02-08"),
   });
   const [dateRangeParamState, setDateRangeParamState] = useQueryStates({
-    "start-date": parseAsString,
-    "end-date": parseAsString,
+    start_date: parseAsString,
+    end_date: parseAsString,
   });
   const dateRange =
-    dateRangeParamState["start-date"] && dateRangeParamState["end-date"]
+    dateRangeParamState["start_date"] && dateRangeParamState["end_date"]
       ? {
-          start: parseDate(dateRangeParamState["start-date"]),
-          end: parseDate(dateRangeParamState["end-date"]),
+          start: parseDate(dateRangeParamState["start_date"]),
+          end: parseDate(dateRangeParamState["end_date"]),
         }
       : undefined;
 
@@ -46,8 +46,8 @@ const OrderDateRange = () => {
       defaultValue={dateRange}
       onChange={(value) => {
         const newParamState = {
-          "start-date": value.start ? value.start.toString() : null,
-          "end-date": value.end ? value.end.toString() : null,
+          start_date: value.start ? value.start.toString() : null,
+          end_date: value.end ? value.end.toString() : null,
         };
 
         setDateRangeParamState(newParamState);

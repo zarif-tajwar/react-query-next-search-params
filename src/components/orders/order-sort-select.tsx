@@ -13,11 +13,9 @@ import {
 } from "react-aria-components";
 import type { Key } from "react-aria-components";
 import { cn } from "@/lib/util";
-import { useState } from "react";
 import { useQueryState } from "next-usequerystate";
 
 const OrderSortSelect = () => {
-  const [selected, setSelected] = useState<Key>(sortSelectOptions[0].value);
   const defaultSortValue = sortSelectOptions[0].value;
   const [sortSelectParamState, setSortSelectParamState] =
     useQueryState("sort_by");

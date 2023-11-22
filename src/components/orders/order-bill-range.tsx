@@ -13,7 +13,7 @@ import {
 } from "react-aria-components";
 
 const OrderBillRangeSlider = () => {
-  const [rangeParamState, setRangeParamState] = useQueryState("bill-range");
+  const [rangeParamState, setRangeParamState] = useQueryState("bill_range");
   const parsedRange = rangeParamState
     ?.split(searchParamSeperators.range)
     .map((str) => Number(str))

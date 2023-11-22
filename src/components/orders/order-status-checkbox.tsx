@@ -13,7 +13,7 @@ import { useQueryState } from "next-usequerystate";
 
 const OrderStatusCheckbox = () => {
   const [checkedParamState, setCheckedParamState] =
-    useQueryState("order-status");
+    useQueryState("order_status");
 
   const parsedChecked = checkedParamState
     ?.split(searchParamSeperators.multipleOption)
