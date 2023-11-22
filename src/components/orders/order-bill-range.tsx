@@ -30,6 +30,8 @@ const OrderBillRangeSlider = () => {
     );
   };
 
+  console.log("BILL RANGE RENDERED");
+
   return (
     <Slider
       defaultValue={range}

@@ -25,10 +25,6 @@ import { parseDate, type CalendarDate } from "@internationalized/date";
 import { parseAsString, useQueryStates } from "next-usequerystate";
 
 const OrderDateRange = () => {
-  const [date, setDate] = useState({
-    start: parseDate("2020-02-03"),
-    end: parseDate("2020-02-08"),
-  });
   const [dateRangeParamState, setDateRangeParamState] = useQueryStates({
     start_date: parseAsString,
     end_date: parseAsString,
@@ -40,6 +36,8 @@ const OrderDateRange = () => {
           end: parseDate(dateRangeParamState["end_date"]),
         }
       : undefined;
+
+  console.log("DATE RANGE RENDERED");
 
   return (
     <DateRangePicker

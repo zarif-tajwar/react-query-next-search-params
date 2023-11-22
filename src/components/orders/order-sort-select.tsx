@@ -14,31 +14,22 @@ import {
 import type { Key } from "react-aria-components";
 import { cn } from "@/lib/util";
 import { useQueryState } from "next-usequerystate";
+import { useSelectQueryState } from "@/lib/useOrderFilterHooks";
 
 const OrderSortSelect = () => {
-  const defaultSortValue = sortSelectOptions[0].value;
-  const [sortSelectParamState, setSortSelectParamState] =
-    useQueryState("sort_by");
+  const defaultSortValue = sortSelectValues[0];
+  const { value, handleChange } = useSelectQueryState(
+    "sort_by",
+    sortSelectValues,
+    defaultSortValue
+  );
 
-  const isParamValid =
-    sortSelectOptions.findIndex((v) => v.value === sortSelectParamState) !== -1;
-
-  const selected2: Key =
-    sortSelectParamState && isParamValid
-      ? sortSelectParamState
-      : defaultSortValue;
-
-  const handleChange = (changedValue: Key) => {
-    const newParamValue =
-      changedValue === defaultSortValue ? null : (changedValue as string);
-    setSortSelectParamState(newParamValue);
-  };
+  console.log("SELECT RENDERED");
 
   return (
     <Select
-      // selectedKey={selected}
-      defaultSelectedKey={selected2}
-      onSelectionChange={handleChange}
+      defaultSelectedKey={value}
+      onSelectionChange={(changedValue) => handleChange(changedValue as string)}
       className="flex flex-col"
     >
       {({ isOpen }) => (

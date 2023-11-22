@@ -13,3 +13,31 @@ export const priceFormat = (priceInNumber: number) => {
     maximumFractionDigits: 2,
   }).format(priceInNumber);
 };
+
+export const quickSortByReference = <T>(
+  values: T[],
+  referenceValues: T[]
+): T[] => {
+  if (values.length <= 1) {
+    return values;
+  }
+
+  const pivotIndex = Math.floor(values.length / 2);
+  const pivot = values[pivotIndex] as T;
+
+  const less = values.filter((value, index) => {
+    if (index === pivotIndex) return false;
+    return referenceValues.indexOf(value) < referenceValues.indexOf(pivot);
+  });
+
+  const greater = values.filter((value, index) => {
+    if (index === pivotIndex) return false;
+    return referenceValues.indexOf(value) > referenceValues.indexOf(pivot);
+  });
+
+  return [
+    ...quickSortByReference(less, referenceValues),
+    pivot,
+    ...quickSortByReference(greater, referenceValues),
+  ];
+};

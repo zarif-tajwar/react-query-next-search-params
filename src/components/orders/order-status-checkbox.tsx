@@ -2,40 +2,22 @@
 
 import { capitalize, cn } from "@/lib/util";
 import { buttonVariants } from "../ui/button";
-import {
-  OrderStatus,
-  orderStatuses,
-  searchParamSeperators,
-} from "@/lib/constants";
+import { orderStatuses } from "@/lib/constants";
 import { CheckboxGroup, Checkbox, Label } from "react-aria-components";
-import { useState } from "react";
-import { useQueryState } from "next-usequerystate";
+import { useMultiCheckboxQueryState } from "@/lib/useOrderFilterHooks";
 
 const OrderStatusCheckbox = () => {
-  const [checkedParamState, setCheckedParamState] =
-    useQueryState("order_status");
+  const { checkedOptions, handleChange } = useMultiCheckboxQueryState(
+    "order_status",
+    orderStatuses
+  );
 
-  const parsedChecked = checkedParamState
-    ?.split(searchParamSeperators.multipleOption)
-    .filter((value) => orderStatuses.some((x) => x === value));
-
-  const checkedOptions =
-    !parsedChecked || parsedChecked.length === orderStatuses.length
-      ? orderStatuses
-      : parsedChecked;
-
-  const handleCheck = (value: string[]) => {
-    setCheckedParamState(
-      value.length === orderStatuses.length || value.length === 0
-        ? null
-        : value.join(searchParamSeperators.multipleOption)
-    );
-  };
+  console.log("CHECKBOX RENDERED");
 
   return (
     <CheckboxGroup
       value={checkedOptions}
-      onChange={handleCheck}
+      onChange={handleChange}
       className="flex flex-col"
     >
       <Label className="mb-4 font-semibold text-2xl inline-block">
