@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  ParserBuilder,
   parseAsString,
   useQueryState,
   useQueryStates,
@@ -8,6 +9,9 @@ import {
 import { useCallback, useMemo } from "react";
 import { searchParamSeperators } from "./constants";
 import { quickSortByReference } from "./util";
+import { parseDate, CalendarDate } from "@internationalized/date";
+import { DateRange } from "react-aria-components";
+import { z } from "zod";
 
 export const useSelectQueryState = (
   key: string,
@@ -39,7 +43,9 @@ export const useMultiCheckboxQueryState = (key: string, values: string[]) => {
     .filter((value) => values.some((x) => x === value));
 
   const checkedOptions =
-    !parsedChecked || parsedChecked.length === values.length
+    !parsedChecked ||
+    parsedChecked.length === values.length ||
+    parsedChecked.length === 0
       ? values
       : parsedChecked;
 
@@ -58,7 +64,7 @@ export const useMultiCheckboxQueryState = (key: string, values: string[]) => {
   return { checkedOptions, handleChange };
 };
 
-export const useDoubleRangeSlider = (
+export const useDoubleRangeSliderQueryState = (
   key: string,
   defaultRangeValue: number[]
 ) => {
@@ -71,7 +77,11 @@ export const useDoubleRangeSlider = (
   let rangeValue = defaultRangeValue;
 
   if (parsedRange !== undefined && parsedRange.length !== 0) {
-    if (parsedRange.length === 1) {
+    if (
+      parsedRange.length === 1 &&
+      parsedRange.at(0)! <= defaultRangeValue.at(1)! &&
+      parsedRange.at(0)! >= defaultRangeValue.at(0)!
+    ) {
       rangeValue = [parsedRange.at(0)!, parsedRange.at(0)!];
     } else if (
       parsedRange.length === 2 &&
@@ -96,4 +106,32 @@ export const useDoubleRangeSlider = (
   );
 
   return { rangeValue, handleChange };
+};
+
+export const useDateRangeQueryState = (startKey: string, endKey: string) => {
+  const [queryState, setDateRangeParamState] = useQueryStates({
+    [startKey]: parseAsString,
+    [endKey]: parseAsString,
+  });
+
+  let dateRangeValue: { start: CalendarDate; end: CalendarDate } | undefined =
+    undefined;
+
+  try {
+    dateRangeValue = {
+      start: parseDate(queryState[startKey]!),
+      end: parseDate(queryState[endKey]!),
+    };
+  } catch (error) {}
+
+  const handleChange = (value: DateRange) => {
+    const newParamState = {
+      [startKey]: value.start ? value.start.toString() : null,
+      [endKey]: value.end ? value.end.toString() : null,
+    };
+
+    setDateRangeParamState(newParamState);
+  };
+
+  return { dateRangeValue, handleChange };
 };

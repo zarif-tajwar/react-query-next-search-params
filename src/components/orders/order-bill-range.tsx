@@ -1,10 +1,8 @@
 "use client";
 
-import { defaultTotalBillRange, searchParamSeperators } from "@/lib/constants";
-import { useDoubleRangeSlider } from "@/lib/useOrderFilterHooks";
+import { defaultTotalBillRange } from "@/lib/constants";
+import { useDoubleRangeSliderQueryState } from "@/lib/useOrderFilterHooks";
 import { cn, priceFormat } from "@/lib/util";
-import { useQueryState } from "next-usequerystate";
-import { useState } from "react";
 import {
   Label,
   Slider,
@@ -14,7 +12,7 @@ import {
 } from "react-aria-components";
 
 const OrderBillRangeSlider = () => {
-  const { rangeValue, handleChange } = useDoubleRangeSlider(
+  const { rangeValue, handleChange } = useDoubleRangeSliderQueryState(
     "bill_range",
     defaultTotalBillRange
   );

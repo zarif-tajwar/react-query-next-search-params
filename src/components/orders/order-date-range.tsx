@@ -1,8 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/util";
-import { CalendarIcon, ChevronLeft, ChevronUpDown } from "../icons";
-import { buttonVariants } from "../ui/button";
+import { ChevronLeft, ChevronUpDown } from "../icons";
 import {
   Button,
   CalendarCell,
@@ -20,36 +19,22 @@ import {
   Popover,
   RangeCalendar,
 } from "react-aria-components";
-import { useState } from "react";
-import { parseDate, type CalendarDate } from "@internationalized/date";
-import { parseAsString, useQueryStates } from "next-usequerystate";
+import { useDateRangeQueryState } from "@/lib/useOrderFilterHooks";
+import { getLocalTimeZone, today } from "@internationalized/date";
 
 const OrderDateRange = () => {
-  const [dateRangeParamState, setDateRangeParamState] = useQueryStates({
-    start_date: parseAsString,
-    end_date: parseAsString,
-  });
-  const dateRange =
-    dateRangeParamState["start_date"] && dateRangeParamState["end_date"]
-      ? {
-          start: parseDate(dateRangeParamState["start_date"]),
-          end: parseDate(dateRangeParamState["end_date"]),
-        }
-      : undefined;
+  const { dateRangeValue, handleChange } = useDateRangeQueryState(
+    "start_date",
+    "end_date"
+  );
 
   console.log("DATE RANGE RENDERED");
 
   return (
     <DateRangePicker
-      defaultValue={dateRange}
-      onChange={(value) => {
-        const newParamState = {
-          start_date: value.start ? value.start.toString() : null,
-          end_date: value.end ? value.end.toString() : null,
-        };
-
-        setDateRangeParamState(newParamState);
-      }}
+      defaultValue={dateRangeValue}
+      onChange={handleChange}
+      maxValue={today(getLocalTimeZone())}
     >
       <Label className="mb-4 font-semibold text-2xl flex flex-col">
         Date Range
@@ -122,12 +107,16 @@ const OrderDateRange = () => {
                 )}
               </CalendarGridHeader>
               <div className="w-full h-6" aria-hidden="true"></div>
-              <CalendarGridBody className="">
+              <CalendarGridBody>
                 {(date) => (
                   <CalendarCell
                     date={date}
-                    className={
-                      "flex items-start justify-start pl-2.5 selected:bg-neutral-200 outside-month:cursor-default selected:text-neutral-800 hover:bg-neutral-700 border-none outline-none py-2 focus-visible:ring-1 focus-visible:ring-neutral-200 focus-visible:selected:ring-offset-2 focus-visible:selected:ring-offset-neutral-700 transition-colors duration-100"
+                    className={({ isOutsideVisibleRange }) =>
+                      cn(
+                        "flex items-start justify-start pl-2.5 selected:bg-neutral-200 selected:text-neutral-800 hover:bg-neutral-700 border-none outline-none py-2 focus-visible:ring-1 focus-visible:ring-neutral-200 focus-visible:selected:ring-offset-2 focus-visible:selected:ring-offset-neutral-700 transition-colors duration-100",
+                        isOutsideVisibleRange &&
+                          "text-neutral-600 cursor-default"
+                      )
                     }
                   />
                 )}
