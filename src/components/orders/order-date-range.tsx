@@ -87,7 +87,7 @@ const OrderDateRange = () => {
         </DateInput>
         <Button
           className={
-            "inline-flex items-center justify-center ml-auto -mr-1.5 bg-neutral-300 text-neutral-900 border-none outline-none focus-visible:ring-2 focus-visible:ring-neutral-200 focus-visible:ring-offset-2 hover:bg-neutral-100 transition-colors duration-100 focus-visible:ring-offset-neutral-900 w-8 h-8"
+            "inline-flex items-center justify-center ml-auto -mr-2 bg-neutral-300 text-neutral-900 border-none outline-none focus-visible:ring-2 focus-visible:ring-neutral-200 focus-visible:ring-offset-2 hover:bg-neutral-100 transition-colors duration-100 focus-visible:ring-offset-neutral-900 w-8 h-8"
           }
         >
           <ChevronUpDown />

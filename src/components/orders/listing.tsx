@@ -6,12 +6,12 @@ const OrderListing = ({ orders }: { orders: Orders }) => {
     <div className="grid grid-cols-2 gap-8">
       {orders.map((order) => (
         <div key={order.order_id} className="border-b-4 border-neutral-600">
-          <span className="w-full block bg-neutral-300 px-6 py-3 text-xl font-bold -mb-0.5 text-neutral-900">
+          <span className="w-full block bg-neutral-300 px-7 py-3 text-xl font-bold -mb-0.5 text-neutral-900">
             Order ID : {order.order_id}
           </span>
           <div
             key={order.order_id}
-            className="bg-neutral-800 grid grid-cols-2 p-6 gap-1.5"
+            className="bg-neutral-800 grid grid-cols-2 px-7 py-6 gap-1.5"
           >
             <span className="font-medium">Order Status</span>
             <span>{capitalize(order.order_status)}</span>

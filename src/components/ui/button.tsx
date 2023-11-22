@@ -9,11 +9,11 @@ const buttonVariants = cva(
     variants: {
       variant: {
         outline:
-          "ring-white ring-1 hover:bg-neutral-700 text-neutral-100 focus-within:ring-2 focus-within:ring-neutral-50 focus-within:ring-offset-2 focus-within:ring-offset-neutral-400",
+          "ring-white ring-1 hover:bg-neutral-700 text-neutral-100 focus-visible:ring-2 focus-visible:ring-neutral-50 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-400",
         filled:
-          "bg-neutral-300 text-neutral-800 ring-transparent hover:bg-neutral-400 focus-within:ring-2 focus-within:ring-neutral-50 focus-within:ring-offset-2 focus-within:ring-offset-neutral-900",
+          "bg-neutral-300 text-neutral-800 ring-transparent hover:bg-neutral-400 focus-visible:ring-2 focus-visible:ring-neutral-50 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900",
         unchecked:
-          "ring-1 ring-neutral-300 text-neutral-300 bg-transparent hover:bg-white/10 focus-within:ring-offset-2 focus-within:ring-offset-neutral-400 focus-within:ring-2 focus-within:ring-neutral-50",
+          "ring-1 ring-neutral-300 text-neutral-300 bg-transparent hover:bg-white/10 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-400 focus-visible:ring-2 focus-visible:ring-neutral-50",
       },
       size: {
         default: "px-4 py-2 gap-2 w-max",
