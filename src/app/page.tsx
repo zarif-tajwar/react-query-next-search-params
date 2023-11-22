@@ -3,7 +3,6 @@ import OrderDateRange from "@/components/orders/order-date-range";
 import OrderBillRangeSlider from "@/components/orders/order-bill-range";
 import OrderSortSelect from "@/components/orders/order-sort-select";
 import OrderStatusCheckbox from "@/components/orders/order-status-checkbox";
-import { Button } from "@/components/ui/button";
 import { getData } from "@/lib/data";
 
 export default async function Home() {

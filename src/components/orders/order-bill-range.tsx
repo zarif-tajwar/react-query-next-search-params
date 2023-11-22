@@ -1,6 +1,7 @@
 "use client";
 
 import { defaultTotalBillRange, searchParamSeperators } from "@/lib/constants";
+import { useDoubleRangeSlider } from "@/lib/useOrderFilterHooks";
 import { cn, priceFormat } from "@/lib/util";
 import { useQueryState } from "next-usequerystate";
 import { useState } from "react";
@@ -13,28 +14,16 @@ import {
 } from "react-aria-components";
 
 const OrderBillRangeSlider = () => {
-  const [rangeParamState, setRangeParamState] = useQueryState("bill_range");
-  const parsedRange = rangeParamState
-    ?.split(searchParamSeperators.range)
-    .map((str) => Number(str))
-    .filter((num) => !Number.isNaN(num));
-
-  const range = parsedRange ? parsedRange : defaultTotalBillRange;
-  const handleChange = (range: number[]) => {
-    const isDefault =
-      range[0] === defaultTotalBillRange[0] &&
-      range[1] === defaultTotalBillRange[1];
-
-    setRangeParamState(
-      isDefault ? null : range.map(String).join(searchParamSeperators.range)
-    );
-  };
+  const { rangeValue, handleChange } = useDoubleRangeSlider(
+    "bill_range",
+    defaultTotalBillRange
+  );
 
   console.log("BILL RANGE RENDERED");
 
   return (
     <Slider
-      defaultValue={range}
+      defaultValue={rangeValue}
       onChangeEnd={handleChange}
       minValue={defaultTotalBillRange[0]}
       maxValue={defaultTotalBillRange[1]}

@@ -17,11 +17,11 @@ import { useQueryState } from "next-usequerystate";
 import { useSelectQueryState } from "@/lib/useOrderFilterHooks";
 
 const OrderSortSelect = () => {
-  const defaultSortValue = sortSelectValues[0];
+  const defaultSortValue = sortSelectValues.at(0);
   const { value, handleChange } = useSelectQueryState(
     "sort_by",
     sortSelectValues,
-    defaultSortValue
+    defaultSortValue!
   );
 
   console.log("SELECT RENDERED");

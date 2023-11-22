@@ -9,15 +9,6 @@ import { useCallback, useMemo } from "react";
 import { searchParamSeperators } from "./constants";
 import { quickSortByReference } from "./util";
 
-export const useOrderFilter = () => {
-  const [queryStates, setQueryStates] = useQueryStates({
-    sort_by: parseAsString,
-    order_status: parseAsString,
-  });
-
-  return { queryStates, setQueryStates, lol: 10 };
-};
-
 export const useSelectQueryState = (
   key: string,
   values: string[],
@@ -65,4 +56,44 @@ export const useMultiCheckboxQueryState = (key: string, values: string[]) => {
   );
 
   return { checkedOptions, handleChange };
+};
+
+export const useDoubleRangeSlider = (
+  key: string,
+  defaultRangeValue: number[]
+) => {
+  const [queryState, setQueryState] = useQueryState(key);
+  const parsedRange = queryState
+    ?.split(searchParamSeperators.range)
+    .map((str) => Number(str))
+    .filter((num) => !Number.isNaN(num));
+
+  let rangeValue = defaultRangeValue;
+
+  if (parsedRange !== undefined && parsedRange.length !== 0) {
+    if (parsedRange.length === 1) {
+      rangeValue = [parsedRange.at(0)!, parsedRange.at(0)!];
+    } else if (
+      parsedRange.length === 2 &&
+      parsedRange.at(0)! < parsedRange.at(1)! &&
+      parsedRange.at(0)! >= defaultRangeValue.at(0)! &&
+      parsedRange.at(1)! <= defaultRangeValue.at(1)!
+    ) {
+      rangeValue = [parsedRange.at(0)!, parsedRange.at(1)!];
+    }
+  }
+
+  const handleChange = useCallback(
+    (range: number[]) => {
+      const isDefault =
+        range[0] === defaultRangeValue[0] && range[1] === defaultRangeValue[1];
+
+      setQueryState(
+        isDefault ? null : range.map(String).join(searchParamSeperators.range)
+      );
+    },
+    [defaultRangeValue, setQueryState]
+  );
+
+  return { rangeValue, handleChange };
 };
