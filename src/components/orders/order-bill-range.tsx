@@ -1,7 +1,7 @@
 "use client";
 
 import { defaultTotalBillRange } from "@/lib/constants";
-import { useDoubleRangeSliderQueryState } from "@/lib/useOrderFilterHooks";
+import { useDoubleRangeSliderQueryState } from "@/lib/order-filter-hooks";
 import { cn, priceFormat } from "@/lib/util";
 import {
   Label,

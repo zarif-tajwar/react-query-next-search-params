@@ -12,6 +12,7 @@ import { quickSortByReference } from "./util";
 import { parseDate, CalendarDate } from "@internationalized/date";
 import { DateRange } from "react-aria-components";
 import { z } from "zod";
+import { getCalendarDateRange, safeParseDate } from "./validation";
 
 export const useSelectQueryState = (
   key: string,
@@ -115,14 +116,7 @@ export const useDateRangeQueryState = (startKey: string, endKey: string) => {
   });
 
   let dateRangeValue: { start: CalendarDate; end: CalendarDate } | undefined =
-    undefined;
-
-  try {
-    dateRangeValue = {
-      start: parseDate(queryState[startKey]!),
-      end: parseDate(queryState[endKey]!),
-    };
-  } catch (error) {}
+    getCalendarDateRange(queryState[startKey]!, queryState[endKey]!);
 
   const handleChange = (value: DateRange) => {
     const newParamState = {

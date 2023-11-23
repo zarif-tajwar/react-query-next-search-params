@@ -14,7 +14,7 @@ import {
 import type { Key } from "react-aria-components";
 import { cn } from "@/lib/util";
 import { useQueryState } from "next-usequerystate";
-import { useSelectQueryState } from "@/lib/useOrderFilterHooks";
+import { useSelectQueryState } from "@/lib/order-filter-hooks";
 
 const OrderSortSelect = () => {
   const defaultSortValue = sortSelectValues.at(0);
@@ -34,7 +34,7 @@ const OrderSortSelect = () => {
     >
       {({ isOpen }) => (
         <>
-          <Label className="mb-4 font-semibold text-2xl inline-block">
+          <Label className="mb-4 font-semibold text-2xl inline-block max-w-max">
             Sort by
           </Label>
           <Button
@@ -51,6 +51,8 @@ const OrderSortSelect = () => {
                 viewBox="0 0 20 20"
                 fill="currentColor"
                 className="w-5 h-5"
+                width={20}
+                height={20}
               >
                 <path
                   fillRule="evenodd"

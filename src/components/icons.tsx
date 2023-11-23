@@ -27,6 +27,8 @@ export const ChevronLeft = ({ ...props }: SvgIconProps) => (
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 20 20"
     fill="currentColor"
+    width={20}
+    height={20}
     className={cn("w-5 h-5", props.className)}
     {...props}
   >
@@ -43,6 +45,8 @@ export const ChevronUpDown = ({ ...props }: SvgIconProps) => (
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 20 20"
     fill="currentColor"
+    width={20}
+    height={20}
     className={cn("w-5 h-5", props.className)}
     {...props}
   >

@@ -4,7 +4,7 @@ import { capitalize, cn } from "@/lib/util";
 import { buttonVariants } from "../ui/button";
 import { orderStatuses } from "@/lib/constants";
 import { CheckboxGroup, Checkbox, Label } from "react-aria-components";
-import { useMultiCheckboxQueryState } from "@/lib/useOrderFilterHooks";
+import { useMultiCheckboxQueryState } from "@/lib/order-filter-hooks";
 
 const OrderStatusCheckbox = () => {
   const { checkedOptions, handleChange } = useMultiCheckboxQueryState(
@@ -56,6 +56,8 @@ const OrderStatusCheckbox = () => {
                       viewBox="0 0 20 20"
                       fill="currentColor"
                       className="w-5 h-5"
+                      width={20}
+                      height={20}
                     >
                       <path
                         fillRule="evenodd"
