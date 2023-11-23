@@ -1,5 +1,10 @@
-export const orderStatuses = ["pending", "in progress", "delivered"];
-export type OrderStatus = "pending" | "in progress" | "delivered";
+export const orderStatuses = [
+  "pending",
+  "in progress",
+  "delivered",
+  "cancelled",
+];
+export type OrderStatus = "pending" | "in progress" | "delivered" | "cancelled";
 
 export const sortSelectOptions = [
   { label: "Total Price (asc)", value: "price-asc" },

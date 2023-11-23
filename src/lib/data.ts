@@ -1,7 +1,12 @@
 import * as fs from "fs";
 import z from "zod";
 
-const zOrderStatus = z.enum(["pending", "in progress", "delivered"]);
+const zOrderStatus = z.enum([
+  "pending",
+  "in progress",
+  "delivered",
+  "cancelled",
+]);
 
 const zData = z.object({
   order_id: z.number(),

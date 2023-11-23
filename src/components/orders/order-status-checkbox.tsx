@@ -23,7 +23,7 @@ const OrderStatusCheckbox = () => {
       <Label className="mb-4 font-semibold text-2xl inline-block">
         Order Status
       </Label>
-      <div className="flex items-center justify-start gap-2.5 flex-wrap">
+      <div className="grid grid-cols-3 gap-3">
         {orderStatuses.map((status) => {
           return (
             <Checkbox
@@ -35,7 +35,7 @@ const OrderStatusCheckbox = () => {
                   buttonVariants({
                     variant: isSelected ? "filled" : "unchecked",
                   }),
-                  "cursor-pointer group min-h-[3rem]",
+                  "cursor-pointer group min-h-[3rem] w-full justify-start",
                   isSelected && "hover:bg-neutral-300"
                 )
               }
