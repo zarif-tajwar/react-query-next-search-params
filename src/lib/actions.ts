@@ -13,6 +13,8 @@ import {
   parseDoubleNumberRangeFromStr,
 } from "./validation";
 import { orderStatuses, searchParamSeperators } from "./constants";
+import { db } from "@/db";
+import { orders } from "@/db/schema";
 
 const staticSearchParams = {
   bill_range: "151-652",
@@ -46,6 +48,12 @@ export const getOrdersData = async (searchParams: OrderFilterSearchParams) => {
       );
     }
   }
+
+  return data;
+};
+
+export const getDataFromDb = async () => {
+  const data = await db.select().from(orders);
 
   return data;
 };

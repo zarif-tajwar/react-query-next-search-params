@@ -6,15 +6,19 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "mig:generate": "drizzle-kit generate:sqlite",
+    "mig:push": "drizzle-kit push:sqlite"
   },
   "dependencies": {
     "@internationalized/date": "^3.5.0",
     "@radix-ui/react-slot": "^1.0.2",
     "@tanstack/react-query": "^5.8.4",
     "@tanstack/react-query-devtools": "^5.8.4",
+    "better-sqlite3": "^9.1.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
+    "drizzle-orm": "^0.29.0",
     "next": "14.0.3",
     "next-usequerystate": "^1.12.2",
     "react": "^18",
@@ -27,10 +31,12 @@
     "zustand": "^4.4.6"
   },
   "devDependencies": {
+    "@types/better-sqlite3": "^7.6.8",
     "@types/node": "^20.9.3",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
+    "drizzle-kit": "^0.20.4",
     "eslint": "^8",
     "eslint-config-next": "14.0.3",
     "postcss": "^8",
