@@ -3,7 +3,6 @@ import z from "zod";
 import { SearchParamServerValue } from "./types";
 import { type Entries } from "type-fest";
 import { searchParamSeperators } from "./constants";
-import { faker } from "@faker-js/faker";
 
 export const safeParseDate = (str: string) => {
   let out: CalendarDate | undefined = undefined;
@@ -99,17 +98,4 @@ export const parseDoubleNumberRangeFromStr = (
   }
 
   return rangeValue;
-};
-
-
-
-export const generateRandomDate = (from: string | Date, to: string | Date) => {
-  const dateWithTimeComponents = faker.date.between({
-    from,
-    to,
-  });
-  const year = dateWithTimeComponents.getFullYear();
-  const month = dateWithTimeComponents.getMonth() + 1;
-  const day = dateWithTimeComponents.getDate();
-  return new Date(`${year}-${month}-${day}`);
 };

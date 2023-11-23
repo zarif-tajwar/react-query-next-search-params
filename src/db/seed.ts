@@ -1,9 +1,19 @@
 import { db } from "@/db";
 import { OrdersInsert, orders } from "@/db/schema";
 import { OrderStatus, orderStatuses } from "@/lib/constants";
-import { generateRandomDate } from "@/lib/validation";
 import { faker } from "@faker-js/faker";
 import crypto from "crypto";
+
+export const generateRandomDate = (from: string | Date, to: string | Date) => {
+  const dateWithTimeComponents = faker.date.between({
+    from,
+    to,
+  });
+  const year = dateWithTimeComponents.getFullYear();
+  const month = dateWithTimeComponents.getMonth() + 1;
+  const day = dateWithTimeComponents.getDate();
+  return new Date(`${year}-${month}-${day}`);
+};
 
 const seed = async () => {
   const valuesForInsert: OrdersInsert[] = [...Array(1000).keys()].map(() => {
