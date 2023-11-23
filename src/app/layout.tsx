@@ -21,7 +21,7 @@ export default function RootLayout({
         className={`${overOverpass.className} bg-neutral-900 text-neutral-100`}
       >
         <ReactQueryProvider>
-          <main className="max-w-6xl mx-auto py-20 px-16 min-h-[100svh]">
+          <main className="max-w-6xl mx-auto py-20 px-16 min-h-[100svh] lg:min-h-[110svh]">
             {children}
           </main>
         </ReactQueryProvider>
