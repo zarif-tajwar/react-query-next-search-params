@@ -17,7 +17,7 @@ const OrderBillRangeSlider = () => {
     defaultTotalBillRange
   );
 
-  console.log("BILL RANGE RENDERED");
+  // console.log("BILL RANGE RENDERED");
 
   return (
     <Slider

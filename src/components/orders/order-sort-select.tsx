@@ -1,6 +1,10 @@
 "use client";
 
-import { sortSelectOptions, sortSelectValues } from "@/lib/constants";
+import {
+  defaultSortOption,
+  sortSelectOptions,
+  sortSelectValues,
+} from "@/lib/constants";
 import { buttonVariants } from "../ui/button";
 import {
   Button,
@@ -17,14 +21,13 @@ import { useQueryState } from "next-usequerystate";
 import { useSelectQueryState } from "@/lib/order-filter-hooks";
 
 const OrderSortSelect = () => {
-  const defaultSortValue = sortSelectValues.at(0);
   const { value, handleChange } = useSelectQueryState(
     "sort_by",
     sortSelectValues,
-    defaultSortValue!
+    defaultSortOption?.value!
   );
 
-  console.log("SELECT RENDERED");
+  // console.log("SELECT RENDERED");
 
   return (
     <Select

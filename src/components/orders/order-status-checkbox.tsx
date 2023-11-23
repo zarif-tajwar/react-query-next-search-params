@@ -12,7 +12,7 @@ const OrderStatusCheckbox = () => {
     orderStatuses
   );
 
-  console.log("CHECKBOX RENDERED");
+  // console.log("CHECKBOX RENDERED");
 
   return (
     <CheckboxGroup

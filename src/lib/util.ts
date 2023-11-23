@@ -3,6 +3,7 @@ import { DateRange } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { searchParamSeperators } from "./constants";
 import { CalendarDate, parseDate } from "@internationalized/date";
+import { faker } from "@faker-js/faker";
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
@@ -44,3 +45,6 @@ export const quickSortByReference = <T>(
     ...quickSortByReference(greater, referenceValues),
   ];
 };
+
+export const wait = async (delayInMs: number) =>
+  new Promise((res) => setInterval(res, delayInMs));

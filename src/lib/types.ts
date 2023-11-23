@@ -1,15 +1,10 @@
-import { z } from "zod";
-import { zDataArr } from "./validation";
-
-export type Orders = z.infer<typeof zDataArr>;
-
 export type SearchParamServerValue = string | string[] | undefined;
 
 export type SearchParamsServer = {
   [key: string]: SearchParamServerValue;
 };
 
-const orderFilterSearchParamKeys = [
+export const orderFilterSearchParamKeys = [
   "bill_range",
   "order_status",
   "sort_by",

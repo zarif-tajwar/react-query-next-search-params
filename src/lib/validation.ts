@@ -3,26 +3,7 @@ import z from "zod";
 import { SearchParamServerValue } from "./types";
 import { type Entries } from "type-fest";
 import { searchParamSeperators } from "./constants";
-
-export const zOrderStatus = z.enum([
-  "pending",
-  "in progress",
-  "delivered",
-  "cancelled",
-]);
-
-export const zData = z.object({
-  order_id: z.number(),
-  order_date: z.string().transform((str) => {
-    return new Date(str);
-  }),
-  order_total: z.number(),
-  delivery_time: z.number(),
-  order_status: zOrderStatus,
-  customer_name: z.string(),
-});
-
-export const zDataArr = z.array(zData);
+import { faker } from "@faker-js/faker";
 
 export const safeParseDate = (str: string) => {
   let out: CalendarDate | undefined = undefined;
@@ -40,7 +21,7 @@ export const getCalendarDateRange = (start?: string, end?: string) => {
   let dateRangeValue: { start: CalendarDate; end: CalendarDate } | undefined =
     undefined;
 
-  if (start === undefined || end === undefined) return dateRangeValue;
+  if (!start || !end) return dateRangeValue;
 
   const startDate = safeParseDate(start);
   const endDate = safeParseDate(end);
@@ -118,4 +99,17 @@ export const parseDoubleNumberRangeFromStr = (
   }
 
   return rangeValue;
+};
+
+
+
+export const generateRandomDate = (from: string | Date, to: string | Date) => {
+  const dateWithTimeComponents = faker.date.between({
+    from,
+    to,
+  });
+  const year = dateWithTimeComponents.getFullYear();
+  const month = dateWithTimeComponents.getMonth() + 1;
+  const day = dateWithTimeComponents.getDate();
+  return new Date(`${year}-${month}-${day}`);
 };

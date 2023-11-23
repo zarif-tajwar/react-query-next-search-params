@@ -28,7 +28,7 @@ const OrderDateRange = () => {
     "end_date"
   );
 
-  console.log("DATE RANGE RENDERED");
+  // console.log("DATE RANGE RENDERED");
 
   return (
     <DateRangePicker
