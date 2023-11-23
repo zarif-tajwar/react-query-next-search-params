@@ -1,7 +1,6 @@
 "use server";
 
 import { z } from "zod";
-import { getData } from "./data";
 import {
   OrderFilterSearchParams,
   OrderFilterSearchParamsServer,
@@ -25,35 +24,35 @@ const staticSearchParams = {
 };
 
 export const getOrdersData = async (searchParams: OrderFilterSearchParams) => {
-  let data = await getData();
+  // let data = await getData();
 
-  if (searchParams.bill_range) {
-    const range = parseDoubleNumberRangeFromStr(searchParams.bill_range);
-    if (range) {
-      data = data?.filter(
-        (order) =>
-          order.order_total >= range.at(0)! && order.order_total <= range.at(1)!
-      );
-    }
-  }
+  // if (searchParams.bill_range) {
+  //   const range = parseDoubleNumberRangeFromStr(searchParams.bill_range);
+  //   if (range) {
+  //     data = data?.filter(
+  //       (order) =>
+  //         order.order_total >= range.at(0)! && order.order_total <= range.at(1)!
+  //     );
+  //   }
+  // }
 
-  if (searchParams.order_status) {
-    const options = searchParams.order_status
-      .split(searchParamSeperators.multipleOption)
-      .filter((value) => orderStatuses.some((x) => x === value));
+  // if (searchParams.order_status) {
+  //   const options = searchParams.order_status
+  //     .split(searchParamSeperators.multipleOption)
+  //     .filter((value) => orderStatuses.some((x) => x === value));
 
-    if (options.length > 0) {
-      data = data?.filter((order) =>
-        options.some((x) => x === order.order_status)
-      );
-    }
-  }
+  //   if (options.length > 0) {
+  //     data = data?.filter((order) =>
+  //       options.some((x) => x === order.order_status)
+  //     );
+  //   }
+  // }
 
-  return data;
-};
+  // return data;
 
-export const getDataFromDb = async () => {
-  const data = await db.select().from(orders);
+  let query = await db.select().from(orders);
 
-  return data;
+  console.log(query);
+
+  return query;
 };

@@ -1,9 +1,10 @@
 "use client";
 
+import { OrdersSelect } from "@/db/schema";
 import { Orders } from "@/lib/types";
 import { capitalize, priceFormat } from "@/lib/util";
 
-const ListingClient = ({ orders }: { orders: Orders }) => {
+const ListingClient = ({ orders }: { orders: OrdersSelect[] }) => {
   return (
     <div>
       <div className="mb-10 flex gap-2 items-end justify-between">
@@ -19,26 +20,28 @@ const ListingClient = ({ orders }: { orders: Orders }) => {
       </div>
       <div className="grid grid-cols-2 gap-8">
         {orders.map((order) => (
-          <div key={order.order_id} className="border-b-4 border-neutral-600">
+          <div key={order.orderId} className="border-b-4 border-neutral-600">
             <span className="w-full block bg-neutral-300 px-7 py-3 text-xl font-bold -mb-0.5 text-neutral-900">
-              Order ID : {order.order_id}
+              Order ID : {"#" + order.orderId.slice(0, 7).toUpperCase()}
             </span>
             <div
-              key={order.order_id}
+              key={order.orderId}
               className="bg-neutral-800 grid grid-cols-2 px-7 py-6 gap-1.5"
             >
               <span className="font-medium">Order Status</span>
-              <span>{capitalize(order.order_status)}</span>
+              <span>{capitalize(order.orderStatus)}</span>
               <span className="font-medium">Remaining time</span>
-              <span>{order.delivery_time} minutes</span>
+              <span>{order.deliveryTime} minutes</span>
               <span className="font-medium">Total Bill</span>
-              <span>{priceFormat(order.order_total)}</span>
+              <span>{priceFormat(order.totalBill)}</span>
               <span className="font-medium">Order Date</span>
               <span>
-                {new Intl.DateTimeFormat("en-US").format(order.order_date)}
+                {new Intl.DateTimeFormat("en-US").format(
+                  order.orderTimeStampMs
+                )}
               </span>
               <span className="font-medium">Customer Name</span>
-              <span>{order.customer_name}</span>
+              <span>{order.fullName}</span>
             </div>
           </div>
         ))}

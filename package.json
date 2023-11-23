@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "mig:generate": "drizzle-kit generate:sqlite",
-    "mig:push": "drizzle-kit push:sqlite"
+    "mig:push": "drizzle-kit push:sqlite",
+    "db:studio": "drizzle-kit studio",
+    "db:seed": "node -r esbuild-register src/db/seed.ts"
   },
   "dependencies": {
     "@internationalized/date": "^3.5.0",
@@ -31,12 +33,14 @@
     "zustand": "^4.4.6"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.3.1",
     "@types/better-sqlite3": "^7.6.8",
     "@types/node": "^20.9.3",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
     "drizzle-kit": "^0.20.4",
+    "esbuild-register": "^3.5.0",
     "eslint": "^8",
     "eslint-config-next": "14.0.3",
     "postcss": "^8",
