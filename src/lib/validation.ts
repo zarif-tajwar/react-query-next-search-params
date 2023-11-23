@@ -2,6 +2,7 @@ import { CalendarDate, parseDate } from "@internationalized/date";
 import z from "zod";
 import { SearchParamServerValue } from "./types";
 import { type Entries } from "type-fest";
+import { searchParamSeperators } from "./constants";
 
 export const zOrderStatus = z.enum([
   "pending",
@@ -73,4 +74,48 @@ export const cleanArraysFromServerSearchParams = <
     }
   );
   return Object.fromEntries(filteredEntries) as R;
+};
+
+export const parseDoubleNumberRangeFromStr = (
+  str: string | null | undefined,
+  defaultRangeValue?: number[]
+) => {
+  const parsedRange = str
+    ?.split(searchParamSeperators.range)
+    .map((str) => Number(str))
+    .filter((num) => !Number.isNaN(num));
+
+  let rangeValue = defaultRangeValue;
+
+  if (!parsedRange) return rangeValue;
+
+  if (parsedRange !== undefined && parsedRange.length !== 0) {
+    if (defaultRangeValue) {
+      if (
+        parsedRange.length === 1 &&
+        parsedRange.at(0)! <= defaultRangeValue.at(1)! &&
+        parsedRange.at(0)! >= defaultRangeValue.at(0)!
+      ) {
+        rangeValue = [parsedRange.at(0)!, parsedRange.at(0)!];
+      } else if (
+        parsedRange.length === 2 &&
+        parsedRange.at(0)! <= parsedRange.at(1)! &&
+        parsedRange.at(0)! >= defaultRangeValue.at(0)! &&
+        parsedRange.at(1)! <= defaultRangeValue.at(1)!
+      ) {
+        rangeValue = [parsedRange.at(0)!, parsedRange.at(1)!];
+      }
+    } else {
+      if (parsedRange.length === 1) {
+        rangeValue = [parsedRange.at(0)!, parsedRange.at(0)!];
+      } else if (
+        parsedRange.length === 2 &&
+        parsedRange.at(0)! <= parsedRange.at(1)!
+      ) {
+        rangeValue = [parsedRange.at(0)!, parsedRange.at(1)!];
+      }
+    }
+  }
+
+  return rangeValue;
 };

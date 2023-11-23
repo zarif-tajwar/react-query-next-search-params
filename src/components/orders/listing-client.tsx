@@ -1,7 +1,7 @@
 "use client";
 
 import { Orders } from "@/lib/types";
-import { capitalize } from "@/lib/util";
+import { capitalize, priceFormat } from "@/lib/util";
 
 const ListingClient = ({ orders }: { orders: Orders }) => {
   return (
@@ -11,7 +11,9 @@ const ListingClient = ({ orders }: { orders: Orders }) => {
           <h2 className="font-semibold text-4xl inline-block">
             Filtered Results
           </h2>
-          <span className="inline-block pb-1 text-neutral-400">(10)</span>
+          <span className="inline-block pb-1 text-neutral-400">
+            {orders.length}
+          </span>
         </div>
         <span className="text-neutral-400 pb-1">Query Took 100ms</span>
       </div>
@@ -29,6 +31,8 @@ const ListingClient = ({ orders }: { orders: Orders }) => {
               <span>{capitalize(order.order_status)}</span>
               <span className="font-medium">Remaining time</span>
               <span>{order.delivery_time} minutes</span>
+              <span className="font-medium">Total Bill</span>
+              <span>{priceFormat(order.order_total)}</span>
               <span className="font-medium">Order Date</span>
               <span>
                 {new Intl.DateTimeFormat("en-US").format(order.order_date)}

@@ -10,7 +10,9 @@ import {
 import {
   cleanArraysFromServerSearchParams,
   getCalendarDateRange,
+  parseDoubleNumberRangeFromStr,
 } from "./validation";
+import { orderStatuses, searchParamSeperators } from "./constants";
 
 const staticSearchParams = {
   bill_range: "151-652",
@@ -21,15 +23,29 @@ const staticSearchParams = {
 };
 
 export const getOrdersData = async (searchParams: OrderFilterSearchParams) => {
-  console.log(searchParams, "SEARCH PARAMS");
+  let data = await getData();
 
-  const dateRange = getCalendarDateRange(
-    searchParams.start_date,
-    searchParams.end_date
-  );
+  if (searchParams.bill_range) {
+    const range = parseDoubleNumberRangeFromStr(searchParams.bill_range);
+    if (range) {
+      data = data?.filter(
+        (order) =>
+          order.order_total >= range.at(0)! && order.order_total <= range.at(1)!
+      );
+    }
+  }
 
-  console.log(dateRange?.start.toString());
-  console.log(dateRange?.end.toString());
+  if (searchParams.order_status) {
+    const options = searchParams.order_status
+      .split(searchParamSeperators.multipleOption)
+      .filter((value) => orderStatuses.some((x) => x === value));
 
-  return await getData();
+    if (options.length > 0) {
+      data = data?.filter((order) =>
+        options.some((x) => x === order.order_status)
+      );
+    }
+  }
+
+  return data;
 };

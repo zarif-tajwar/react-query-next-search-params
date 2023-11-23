@@ -12,7 +12,11 @@ import { quickSortByReference } from "./util";
 import { parseDate, CalendarDate } from "@internationalized/date";
 import { DateRange } from "react-aria-components";
 import { z } from "zod";
-import { getCalendarDateRange, safeParseDate } from "./validation";
+import {
+  getCalendarDateRange,
+  parseDoubleNumberRangeFromStr,
+  safeParseDate,
+} from "./validation";
 
 export const useSelectQueryState = (
   key: string,
@@ -70,29 +74,10 @@ export const useDoubleRangeSliderQueryState = (
   defaultRangeValue: number[]
 ) => {
   const [queryState, setQueryState] = useQueryState(key);
-  const parsedRange = queryState
-    ?.split(searchParamSeperators.range)
-    .map((str) => Number(str))
-    .filter((num) => !Number.isNaN(num));
 
-  let rangeValue = defaultRangeValue;
-
-  if (parsedRange !== undefined && parsedRange.length !== 0) {
-    if (
-      parsedRange.length === 1 &&
-      parsedRange.at(0)! <= defaultRangeValue.at(1)! &&
-      parsedRange.at(0)! >= defaultRangeValue.at(0)!
-    ) {
-      rangeValue = [parsedRange.at(0)!, parsedRange.at(0)!];
-    } else if (
-      parsedRange.length === 2 &&
-      parsedRange.at(0)! < parsedRange.at(1)! &&
-      parsedRange.at(0)! >= defaultRangeValue.at(0)! &&
-      parsedRange.at(1)! <= defaultRangeValue.at(1)!
-    ) {
-      rangeValue = [parsedRange.at(0)!, parsedRange.at(1)!];
-    }
-  }
+  const rangeValue =
+    parseDoubleNumberRangeFromStr(queryState, defaultRangeValue) ||
+    defaultRangeValue;
 
   const handleChange = useCallback(
     (range: number[]) => {

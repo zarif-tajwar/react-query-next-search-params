@@ -26,7 +26,7 @@ export default async function Home({
           <OrderBillRangeSlider />
         </div>
       </div>
-      <OrderListing searchParams={searchParams} />
+      <OrderListing serverSearchParams={searchParams} />
     </section>
   );
 }
