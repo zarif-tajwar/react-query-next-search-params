@@ -105,10 +105,10 @@ export const useDateRangeQueryState = (startKey: string, endKey: string) => {
   let dateRangeValue: { start: CalendarDate; end: CalendarDate } | undefined =
     getCalendarDateRange(queryState[startKey]!, queryState[endKey]!);
 
-  const handleChange = (value: DateRange) => {
+  const handleChange = (value: DateRange | undefined) => {
     const newParamState = {
-      [startKey]: value.start ? value.start.toString() : null,
-      [endKey]: value.end ? value.end.toString() : null,
+      [startKey]: value && value.start ? value.start.toString() : null,
+      [endKey]: value && value.end ? value.end.toString() : null,
     };
 
     setDateRangeParamState(newParamState);

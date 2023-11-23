@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/util";
-import { ChevronLeft, ChevronUpDown } from "../icons";
+import { ChevronLeft, ChevronUpDown, XMark } from "../icons";
 import {
   Button,
   CalendarCell,
@@ -21,19 +21,24 @@ import {
 } from "react-aria-components";
 import { useDateRangeQueryState } from "@/lib/order-filter-hooks";
 import { getLocalTimeZone, today } from "@internationalized/date";
+import { useEffect, useState } from "react";
 
 const OrderDateRange = () => {
   const { dateRangeValue, handleChange } = useDateRangeQueryState(
     "start_date",
     "end_date"
   );
+  const [reset, setReset] = useState(false);
 
   // console.log("DATE RANGE RENDERED");
 
   return (
     <DateRangePicker
-      defaultValue={dateRangeValue}
-      onChange={handleChange}
+      value={reset ? null : dateRangeValue}
+      onChange={(value) => {
+        if (reset) setReset(false);
+        handleChange(value);
+      }}
       maxValue={today(getLocalTimeZone())}
     >
       <Label className="mb-4 font-semibold text-2xl flex flex-col">
@@ -41,7 +46,7 @@ const OrderDateRange = () => {
       </Label>
       <Group
         className={cn(
-          "flex whitespace-nowrap w-fit min-w-[17.5rem] items-center max-w-full",
+          "flex relative whitespace-nowrap w-fit min-w-[17.5rem] items-center max-w-full",
           "px-4 ring-1 ring-neutral-200 py-2 gap-0"
         )}
       >
@@ -75,6 +80,17 @@ const OrderDateRange = () => {
         >
           <ChevronUpDown />
         </Button>
+        {dateRangeValue && (
+          <button
+            onClick={() => {
+              setReset(true);
+              handleChange(undefined);
+            }}
+            className="inline-flex -top-2 right-0 absolute -translate-y-full w-6 h-6 hover:bg-neutral-400 transition-colors duration-100 bg-neutral-600 border-none outline-none text-neutral-900 items-center justify-center focus-visible:ring-2 focus-visible:ring-neutral-200"
+          >
+            <XMark />
+          </button>
+        )}
       </Group>
       <Popover offset={8} placement="bottom right" className={"shadow-2xl"}>
         <Dialog>
