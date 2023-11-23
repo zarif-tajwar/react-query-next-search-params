@@ -1,27 +1,5 @@
 import * as fs from "fs";
-import z from "zod";
-
-const zOrderStatus = z.enum([
-  "pending",
-  "in progress",
-  "delivered",
-  "cancelled",
-]);
-
-const zData = z.object({
-  order_id: z.number(),
-  order_date: z.string().transform((str) => {
-    return new Date(str);
-  }),
-  order_total: z.number(),
-  delivery_time: z.number(),
-  order_status: zOrderStatus,
-  customer_name: z.string(),
-});
-
-const zDataArr = z.array(zData);
-
-export type Orders = z.infer<typeof zDataArr>;
+import { zDataArr } from "./validation";
 
 export const getData = async () => {
   const jsonString = fs.readFileSync("src/lib/data.json", {

@@ -3,10 +3,9 @@ import OrderDateRange from "@/components/orders/order-date-range";
 import OrderBillRangeSlider from "@/components/orders/order-bill-range";
 import OrderSortSelect from "@/components/orders/order-sort-select";
 import OrderStatusCheckbox from "@/components/orders/order-status-checkbox";
-import { getData } from "@/lib/data";
+import { getOrdersData } from "@/lib/actions";
 
 export default async function Home() {
-  const data = (await getData())?.slice(0, 10);
   return (
     <section>
       <div className="w-full flex items-start justify-start gap-x-12 gap-y-10 flex-wrap mb-36">
@@ -25,7 +24,7 @@ export default async function Home() {
       </div>
       <div>
         <h2 className="font-semibold text-4xl mb-10">Filtered Results</h2>
-        {data && <OrderListing orders={data} />}
+        <OrderListing />
       </div>
     </section>
   );
