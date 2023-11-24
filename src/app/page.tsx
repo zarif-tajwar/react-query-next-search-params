@@ -5,6 +5,9 @@ import OrderSortSelect from "@/components/orders/order-sort-select";
 import OrderStatusCheckbox from "@/components/orders/order-status-checkbox";
 import { SearchParamsServer } from "@/lib/types";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function Home({
   searchParams,
 }: {

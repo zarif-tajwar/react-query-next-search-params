@@ -1,13 +1,7 @@
 "use server";
 
-import { z } from "zod";
+import { OrderFilterSearchParams } from "./types";
 import {
-  OrderFilterSearchParams,
-  OrderFilterSearchParamsServer,
-  SearchParamsServer,
-} from "./types";
-import {
-  cleanArraysFromServerSearchParams,
   getCalendarDateRange,
   parseDoubleNumberRangeFromStr,
 } from "./validation";
@@ -22,7 +16,6 @@ import {
 import { db } from "@/db";
 import { orders } from "@/db/schema";
 import { SQL, and, between, inArray, sql } from "drizzle-orm";
-import { getLocalTimeZone } from "@internationalized/date";
 
 const staticSearchParams = {
   bill_range: "151-652",
