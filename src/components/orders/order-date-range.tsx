@@ -20,7 +20,7 @@ import {
   RangeCalendar,
 } from "react-aria-components";
 import { useDateRangeQueryState } from "@/lib/order-filter-hooks";
-import { getLocalTimeZone, today } from "@internationalized/date";
+import { getLocalTimeZone, parseDate, today } from "@internationalized/date";
 import { useEffect, useState } from "react";
 
 const OrderDateRange = () => {
@@ -39,7 +39,7 @@ const OrderDateRange = () => {
         if (reset) setReset(false);
         handleChange(value);
       }}
-      maxValue={today(getLocalTimeZone())}
+      maxValue={parseDate("2023-10-31")}
     >
       <Label className="mb-4 font-semibold text-2xl flex flex-col">
         Date Range

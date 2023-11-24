@@ -66,27 +66,28 @@ const ListingClient = () => {
                 key={order.orderId}
                 className="border-b-4 border-neutral-600"
               >
-                <span className="w-full block bg-neutral-300 px-7 py-3 text-xl font-bold -mb-0.5 text-neutral-900">
-                  Order ID : {"#" + order.orderId.slice(0, 7).toUpperCase()}
-                </span>
+                <div className="w-full flex gap-3 bg-neutral-300 px-7 py-3 text-xl font-bold -mb-0.5 text-neutral-900">
+                  <dt>Order ID</dt>
+                  <dd>{"#" + order.orderId.slice(0, 7).toUpperCase()}</dd>
+                </div>
                 <div
                   key={order.orderId}
                   className="bg-neutral-800 grid grid-cols-2 px-7 py-6 gap-1.5"
                 >
-                  <span className="font-medium">Order Status</span>
-                  <span>{capitalize(order.orderStatus)}</span>
-                  <span className="font-medium">Remaining time</span>
-                  <span>{order.deliveryTime} minutes</span>
-                  <span className="font-medium">Total Bill</span>
-                  <span>{priceFormat(order.totalBill)}</span>
-                  <span className="font-medium">Order Date</span>
-                  <span>
+                  <dt className="font-medium">Order Status</dt>
+                  <dd>{capitalize(order.orderStatus)}</dd>
+                  <dt className="font-medium">Remaining time</dt>
+                  <dd>{order.deliveryTime} minutes</dd>
+                  <dt className="font-medium">Total Bill</dt>
+                  <dd>{priceFormat(order.totalBill)}</dd>
+                  <dt className="font-medium">Order Date</dt>
+                  <dd>
                     {new Intl.DateTimeFormat("en-US").format(
                       order.orderTimeStampMs
                     )}
-                  </span>
-                  <span className="font-medium">Customer Name</span>
-                  <span>{order.fullName}</span>
+                  </dd>
+                  <dt className="font-medium">Customer Name</dt>
+                  <dd>{order.fullName}</dd>
                 </div>
               </div>
             ))}
